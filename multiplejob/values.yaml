@@ -9,9 +9,9 @@ service:
 crons:
  "0":
  name: cog-first-cron
- command: cog:first:cronscript
+ command: /opt/myapp/myscript1.sh
  schedule: "*/10 * * * *"
  "1":
  name: cog-second-cron
- command: cog:second:cronscript
+ command: /opt/myapp/myscript2.sh
  schedule: « */3 * * * *" 
