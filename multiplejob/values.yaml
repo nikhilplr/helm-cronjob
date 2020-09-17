@@ -10,8 +10,12 @@ crons:
  "0":
  name: cog-first-cron
  command: /opt/myapp/myscript1.sh
- schedule: "*/10 * * * *"
+ schedule: "10 4 * * *"
  "1":
  name: cog-second-cron
  command: /opt/myapp/myscript2.sh
- schedule: « */3 * * * *" 
+ schedule: "" 30 5 * * *" 
+ "2":
+ name: cog-third-cron
+ command: /opt/myapp/myscript3.sh
+ schedule: "0/5 * * * *" 
