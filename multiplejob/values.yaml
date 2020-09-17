@@ -1,0 +1,17 @@
+env: dev  
+restartPolicy: OnFailure
+image:
+  repository: XYZ
+  tag: 1.0.2
+  pullPolicy: IfNotPresent 
+service: 
+  internalPort: 8028  
+crons:
+ "0":
+ name: cog-first-cron
+ command: cog:first:cronscript
+ schedule: "*/10 * * * *"
+ "1":
+ name: cog-second-cron
+ command: cog:second:cronscript
+ schedule: « */3 * * * *" 

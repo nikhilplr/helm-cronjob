@@ -1,3 +1,4 @@
+{{- range $job, $val := .Values.cronjob.crons }}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -7,7 +8,7 @@ metadata:
     draft: {{ default "draft-app" .Values.draft }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
-  schedule: {{ .Values.schedule }}
+  schedule: {{ .schedule | quote }}
   successfulJobsHistoryLimit: 0 
   jobTemplate:
     spec:
@@ -18,7 +19,7 @@ spec:
             app: {{ .Chart.Name }} 
         spec:       
           containers:
-          - name: {{ .Chart.Name }}
+          - name: {{ .name }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             imagePullPolicy: {{ .Values.image.pullPolicy }} 
             args:
@@ -26,21 +27,12 @@ spec:
               - -c
               - |
                 sleep 2 
-                "/opt/myapp/myscript.sh"
-                sleep 30
-            env: 
-              - name: APP_SECRET
-                valueFrom:
-                  secretKeyRef:
-                    name: {{ .Values.appsecret }}
-                    key: app_secret
-              - name: APP_CLIENT_ID
-                valueFrom:
-                  secretKeyRef:
-                    name: {{ .Values.appsecret }}
-                    key: app_client_id 
+                "./bin/console --env={{ .Values.env }} {{ .command}}"
+                sleep 30 
             ports:
             - containerPort: {{ .Values.service.internalPort }} 
           restartPolicy: {{ .Values.restartPolicy }}
           imagePullSecrets:
             - name: artifactory 
+---
+{{- end}}
