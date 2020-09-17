@@ -3,7 +3,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   namespace: {{ .Values.env }}
-  name: {{ .Chart.Name }}
+  name: {{ .name }}
   labels:
     draft: {{ default "draft-app" .Values.draft }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
@@ -16,7 +16,7 @@ spec:
         metadata:
           labels:
             draft: {{ default "draft-app" .Values.draft }}
-            app: {{ .Chart.Name }} 
+            app: {{ .name }}
         spec:       
           containers:
           - name: {{ .name }}
