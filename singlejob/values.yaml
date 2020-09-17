@@ -1,0 +1,10 @@
+env: dev
+appsecret: myapp-secret 
+schedule: '"30 10 * * *"'
+restartPolicy: OnFailure
+image:
+  repository: XYZ
+  tag: 1.0.2
+  pullPolicy: IfNotPresent 
+service: 
+  internalPort: 8028 
